@@ -127,6 +127,28 @@ if [ -z "${NVM_DIR-}" ]; then
 fi
 unset NVM_SCRIPT_SOURCE 2> /dev/null
 
+nvm_real_dir() {
+  local nvm_dir
+  nvm_dir="$1"
+
+  if [ "@$nvm_dir@" = "@@" ]; then
+    >&2 echo "NVM_DIR cannot be empty"
+    return 2
+  fi
+
+  local real_dir
+  real_dir=$(cd $nvm_dir && pwd -P)
+
+  if [ "@$real_dir@" = "@@" ] || [ ! -d $real_dir ]; then
+    >&2 echo "NVM_DIR is not a valid path"
+    return 2
+  fi
+
+  echo $real_dir
+}
+
+# Convert NVM_DIR to actual path if symlinked
+export NVM_DIR=$(nvm_real_dir $NVM_DIR)
 
 # Setup mirror location if not already set
 if [ -z "${NVM_NODEJS_ORG_MIRROR-}" ]; then
