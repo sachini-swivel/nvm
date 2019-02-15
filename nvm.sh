@@ -1090,10 +1090,11 @@ nvm_ls() {
   fi
 
   if [ "${NVM_ADD_SYSTEM-}" = true ]; then
+    SYSTEM_VERSION="$(nvm deactivate >/dev/null 2>&1 && node -v 2>/dev/null)"
     if [ -z "${PATTERN}" ] || [ "${PATTERN}" = 'v' ]; then
-      VERSIONS="${VERSIONS}$(command printf '\n%s' 'system')"
+      VERSIONS="${VERSIONS}$(command printf '\n%s' 'system') ${SYSTEM_VERSION}"
     elif [ "${PATTERN}" = 'system' ]; then
-      VERSIONS="$(command printf '%s' 'system')"
+      VERSIONS="$(command printf '%s' 'system') ${SYSTEM_VERSION}"
     fi
   fi
 
@@ -1418,7 +1419,7 @@ nvm_print_versions() {
   local LTS_FORMAT
   nvm_echo "${1-}" \
   | command sed '1!G;h;$!d' \
-  | command awk '{ if ($2 && a[$2]++) { print $1, "(LTS: " $2 ")" } else if ($2) { print $1, "(Latest LTS: " $2 ")" } else { print $0 } }' \
+  | command awk '{ if ($1 == "system" && $2) { print $1, $2 } else if ($2 != $2 && a[$2]++) { print $1, "(LTS: " $2 ")" } else if ($2) { print $1, "(Latest LTS: " $2 ")" } else { print $0 } }' \
   | command sed '1!G;h;$!d' \
   | while read -r VERSION_LINE; do
     VERSION="${VERSION_LINE%% *}"
@@ -1432,7 +1433,7 @@ nvm_print_versions() {
       fi
     elif [ "${VERSION}" = "system" ]; then
       if [ "${NVM_HAS_COLORS-}" = '1' ]; then
-        FORMAT='\033[0;33m%15s\033[0m'
+        FORMAT='\033[0;33m%15s\033[0m (\033[0;90m->\033[0m \033[0;33m%s\033[0m)'
       fi
     elif nvm_is_version_installed "${VERSION}"; then
       if [ "${NVM_HAS_COLORS-}" = '1' ]; then
@@ -1441,7 +1442,9 @@ nvm_print_versions() {
         FORMAT='%15s *'
       fi
     fi
-    if [ "${LTS}" != "${VERSION}" ]; then
+    if [ "system" == "${VERSION}" ]; then
+      command printf -- "${FORMAT}\n" "${VERSION}" "${LTS}"
+    elif [ "${LTS}" != "${VERSION}" ]; then
       case "${LTS}" in
         *Latest*)
           LTS="${LTS##Latest }"
