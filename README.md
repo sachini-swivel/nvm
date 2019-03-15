@@ -176,7 +176,7 @@ For a fully manual install, execute the following lines to first clone the nvm r
 
 ```sh
 export NVM_DIR="$HOME/.nvm" && (
-  git clone https://github.com/creationix/nvm.git "$NVM_DIR"
+  git clone --depth=1 https://github.com/creationix/nvm.git "$NVM_DIR"
   cd "$NVM_DIR"
   git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
 ) && \. "$NVM_DIR/nvm.sh"
