@@ -87,8 +87,7 @@ Eg: `curl ... | NVM_DIR="path/to/nvm"`. Ensure that the `NVM_DIR` does not conta
 
 #### Installing in Docker
 
-To install `nvm` in Docker, you may need to prepare you image's environment
-in advanced in order to use `node` & `npm`. Here's a winning recipe:
+To install `nvm` in Docker, you may need to prepare your image's environment in advance in order to use `node` & `npm`. Here's a winning recipe:
 
 ```Dockerfile
 # set your target node version
