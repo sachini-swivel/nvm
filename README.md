@@ -13,9 +13,9 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ## Table of Contents
 
-- [Intro](#intro)
-- [About](#about)
-- [Installing and Updating](#installing-and-updating)
+- [1. Intro](#1-intro)
+- [2. About](#2-about)
+- [3. Installing and Updating](#3-installing-and-updating)
   - [Install & Update Script](#install--update-script)
     - [Additional Notes](#additional-notes)
     - [Troubleshooting on Linux](#troubleshooting-on-linux)
@@ -26,7 +26,7 @@
   - [Git Install](#git-install)
   - [Manual Install](#manual-install)
   - [Manual Upgrade](#manual-upgrade)
-- [Usage](#usage)
+- [4. Usage](#4-usage)
   - [Long-term Support](#long-term-support)
   - [Migrating Global Packages While Installing](#migrating-global-packages-while-installing)
   - [Default Global Packages From File While Installing](#default-global-packages-from-file-while-installing)
@@ -47,27 +47,27 @@
       - [Calling `nvm use` automatically in a directory with a `.nvmrc` file](#calling-nvm-use-automatically-in-a-directory-with-a-nvmrc-file)
     - [fish](#fish)
       - [Calling `nvm use` automatically in a directory with a `.nvmrc` file](#calling-nvm-use-automatically-in-a-directory-with-a-nvmrc-file-1)
-- [Running Tests](#running-tests)
-- [Environment variables](#environment-variables)
-- [Bash Completion](#bash-completion)
-  - [Usage](#usage-1)
-- [Compatibility Issues](#compatibility-issues)
-- [Installing nvm on Alpine Linux](#installing-nvm-on-alpine-linux)
+- [5. Running Tests](#5-running-tests)
+- [6. Environment variables](#6-environment-variables)
+- [7. Bash Completion](#7-bash-completion)
+  - [Usage](#usage)
+- [8. Compatibility Issues](#8-compatibility-issues)
+- [9. Installing nvm on Alpine Linux](#9-installing-nvm-on-alpine-linux)
   - [Alpine Linux 3.13+](#alpine-linux-313)
   - [Alpine Linux 3.5 - 3.12](#alpine-linux-35---312)
-- [Uninstalling / Removal](#uninstalling--removal)
+- [10. Uninstalling / Removal](#10-uninstalling--removal)
   - [Manual Uninstall](#manual-uninstall)
-- [Docker For Development Environment](#docker-for-development-environment)
-- [Problems](#problems)
-- [macOS Troubleshooting](#macos-troubleshooting)
-- [WSL Troubleshooting](#wsl-troubleshooting)
-- [Maintainers](#maintainers)
-- [License](#license)
-- [Copyright notice](#copyright-notice)
+- [11. Docker For Development Environment](#11-docker-for-development-environment)
+- [12. Problems](#12-problems)
+- [13. macOS Troubleshooting](#13-macos-troubleshooting)
+- [14. WSL Troubleshooting](#14-wsl-troubleshooting)
+- [15. Maintainers](#15-maintainers)
+- [16. License](#16-license)
+- [17. Copyright notice](#17-copyright-notice)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-## Intro
+## 1. Intro
 
 `nvm` allows you to quickly install and use different versions of node via the command line.
 
@@ -90,12 +90,13 @@ v12.22.6
 Simple as that!
 
 
-## About
+## 2. About
 nvm is a version manager for [node.js](https://nodejs.org/en/), designed to be installed per-user, and invoked per-shell. `nvm` works on any POSIX-compliant shell (sh, dash, ksh, zsh, bash), in particular on these platforms: unix, macOS, and [windows WSL](https://github.com/nvm-sh/nvm#important-notes).
 
 <a id="installation-and-update"></a>
 <a id="install-script"></a>
-## Installing and Updating
+
+## 3. Installing and Updating
 
 ### Install & Update Script
 
@@ -286,12 +287,18 @@ For manual upgrade with `git` (requires git v1.7.10+):
 ) && \. "$NVM_DIR/nvm.sh"
 ```
 
-## Usage
+## 4. Usage
 
 To download, compile, and install the latest release of node, do this:
 
 ```sh
 nvm install node # "node" is an alias for the latest version
+```
+
+You can list available versions using `ls-remote`:
+
+```sh
+nvm ls-remote
 ```
 
 To install a specific version of node:
@@ -302,11 +309,6 @@ nvm install 14.7.0 # or 16.3.0, 12.22.1, etc
 
 The first version installed becomes the default. New shells will start with the default version of node (e.g., `nvm alias default`).
 
-You can list available versions using `ls-remote`:
-
-```sh
-nvm ls-remote
-```
 
 And then in any new shell just use the installed version:
 
@@ -703,7 +705,7 @@ end
 load_nvm > /dev/stderr
 ```
 
-## Running Tests
+## 5. Running Tests
 
 Tests are written in [Urchin]. Install Urchin (and other dependencies) like so:
 
@@ -726,7 +728,7 @@ Run all of the tests like this:
 
 Nota bene: Avoid running nvm while the tests are running.
 
-## Environment variables
+## 6. Environment variables
 
 nvm exposes the following environment variables:
 
@@ -739,7 +741,7 @@ nvm exposes the following environment variables:
 Additionally, nvm modifies `PATH`, and, if present, `MANPATH` and `NODE_PATH` when changing versions.
 
 
-## Bash Completion
+## 7. Bash Completion
 
 To activate, you need to source `bash_completion`:
 
@@ -787,7 +789,7 @@ nvm uninstall:
 my_alias        default        v10.22.0       v12.18.3      v14.8.0
 ```
 
-## Compatibility Issues
+## 8. Compatibility Issues
 
 `nvm` will encounter some issues if you have some non-default settings set. (see [#606](https://github.com/creationix/nvm/issues/606))
 The following are known to cause issues:
@@ -811,7 +813,7 @@ Shell settings:
 set -e
 ```
 
-## Installing nvm on Alpine Linux
+## 9. Installing nvm on Alpine Linux
 
 In order to provide the best performance (and other optimizations), nvm will download and install pre-compiled binaries for Node (and npm) when you run `nvm install X`. The Node project compiles, tests and hosts/provides these pre-compiled binaries which are built for mainstream/traditional Linux distributions (such as Debian, Ubuntu, CentOS, RedHat et al).
 
@@ -840,7 +842,8 @@ The Node project has some desire but no concrete plans (due to the overheads of 
 As a potential alternative, @mhart (a Node contributor) has some [Docker images for Alpine Linux with Node and optionally, npm, pre-installed](https://github.com/mhart/alpine-node).
 
 <a id="removal"></a>
-## Uninstalling / Removal
+
+## 10. Uninstalling / Removal
 
 ### Manual Uninstall
 
@@ -858,7 +861,7 @@ export NVM_DIR="$HOME/.nvm"
 [[ -r $NVM_DIR/bash_completion ]] && \. $NVM_DIR/bash_completion
 ```
 
-## Docker For Development Environment
+## 11. Docker For Development Environment
 
 To make the development and testing work easier, we have a Dockerfile for development usage, which is based on Ubuntu 18.04 base image, prepared with essential and useful tools for `nvm` development, to build the docker image of the environment, run the docker command at the root of `nvm` repository:
 
@@ -890,7 +893,7 @@ For more information and documentation about docker, please refer to its officia
   - https://www.docker.com/
   - https://docs.docker.com/
 
-## Problems
+## 12. Problems
 
   - If you try to install a node version and the installation fails, be sure to run `nvm cache clear` to delete cached node downloads, or you might get an error like the following:
 
@@ -906,7 +909,7 @@ nvm install -s 0.8.6
 
   - If setting the `default` alias does not establish the node version in new shells (i.e. `nvm current` yields `system`), ensure that the system's node `PATH` is set before the `nvm.sh` source line in your shell profile (see [#658](https://github.com/nvm-sh/nvm/issues/658))
 
-## macOS Troubleshooting
+## 13. macOS Troubleshooting
 
 **nvm node version not found in vim shell**
 
@@ -1011,7 +1014,7 @@ Here's what you will need to do:
 
 Now you should be able to use node as usual.
 
-## WSL Troubleshooting
+## 14. WSL Troubleshooting
 
 If you've encountered this error on WSL-2:
 
@@ -1045,15 +1048,15 @@ You can check the contents of the file by running:
   cat /etc/resolv.conf
   ```
 
-## Maintainers
+## 15. Maintainers
 
 Currently, the sole maintainer is [@ljharb](https://github.com/ljharb) - more maintainers are quite welcome, and we hope to add folks to the team over time. [Governance](./GOVERNANCE.md) will be re-evaluated as the project evolves.
 
-## License
+## 16. License
 
 See [LICENSE.md](./LICENSE.md).
 
-## Copyright notice
+## 17. Copyright notice
 
 Copyright [OpenJS Foundation](https://openjsf.org) and `nvm` contributors. All rights reserved. The [OpenJS Foundation](https://openjsf.org) has registered trademarks and uses trademarks.  For a list of trademarks of the [OpenJS Foundation](https://openjsf.org), please see our [Trademark Policy](https://trademark-policy.openjsf.org/) and [Trademark List](https://trademark-list.openjsf.org/).  Node.js is a trademark of Joyent, Inc. and is used with its permission.  Trademarks and logos not indicated on the [list of OpenJS Foundation trademarks](https://trademark-list.openjsf.org) are trademarks™ or registered® trademarks of their respective holders. Use of them does not imply any affiliation with or endorsement by them.
 
