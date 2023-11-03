@@ -633,6 +633,10 @@ This alias would search 'up' from your current directory in order to detect a `.
 
 #### zsh
 
+##### Via zsh-nvm
+
+If you use the `zsh-nvm` plugin, [you can set](https://github.com/lukechilds/zsh-nvm#auto-use) `NVM_AUTO_USE=true` to have it automatically detect and use `.nvmrc` files.
+
 ##### Calling `nvm use` automatically in a directory with a `.nvmrc` file
 
 Put this into your `$HOME/.zshrc` to call `nvm use` automatically whenever you enter a directory that contains an
