@@ -665,6 +665,8 @@ add-zsh-hook chpwd load-nvmrc
 load-nvmrc
 ```
 
+After saving the file, run `source ~/.zshrc` to reload the configuration with the latest changes made
+
 #### fish
 
 ##### Calling `nvm use` automatically in a directory with a `.nvmrc` file
