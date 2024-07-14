@@ -1848,6 +1848,7 @@ nvm_print_versions() {
     -v old_lts_color="$DEFAULT_COLOR" -v has_colors="$NVM_HAS_COLORS" '
 function alen(arr, i, len) { len=0; for(i in arr) len++; return len; }
 function v2a(v, a) { sub(/^(iojs-)?v/, "", v); split(v, a, "."); }
+function v2m(v, a) { sub(/^(iojs-)?v/, "", v); split(v, a, "."); return a[1]; }
 function vcmp(v1,v2,a1,a2,i,d) { v2a(v1,a1); v2a(v2,a2); for(i=1;i<4;i++) { d = a1[i] - a2[i]; if(d!=0) return d; } return 0; }
 BEGIN {
   fmt_installed = has_colors ? (installed_color ? "\033[" installed_color "%15s\033[0m" : "%15s") : "%15s *";
@@ -1864,6 +1865,7 @@ BEGIN {
   split(installed_versions, installed, "|");
   rows = alen(lines);
   filter_on = (vcmp("v0.0.0", min_ver) != 0);
+  current_major = -1;
   for (m = n = 1; n <= rows; n++) {
     split(lines[n], fields, "[[:blank:]]+");
     cols = alen(fields);
@@ -1876,10 +1878,12 @@ BEGIN {
       }
     }
 
-    if (filter_on && !is_installed) {
-      if (vcmp(version, min_ver) >= 0) {
+    if (filter_on != 0) {
+      if (is_installed != 0) {
+        current_major = v2m(version);
+      } else if (vcmp(version, min_ver) >= 0) {
         filter_on = 0;
-      } else {
+      } else if (v2m(version) != current_major) {
         continue;
       }
     }
@@ -1889,7 +1893,7 @@ BEGIN {
       fmt_version = fmt_current;
     } else if (version == "system") {
       fmt_version = fmt_system;
-    } else if (is_installed) {
+    } else if (is_installed != 0) {
       fmt_version = fmt_installed;
     }
 
