@@ -1,0 +1,16 @@
+#!/bin/sh
+
+set -ex
+die () { echo "$@" ; exit 1; }
+\. ../../../nvm.sh
+
+NVM_TEST_VERSION=v9
+
+# Remove the stuff we're clobbering.
+[ -e ../../$NVM_TEST_VERSION ] && rm -R ../../$NVM_TEST_VERSION
+
+# Write it to nvmrc
+echo "$NVM_TEST_VERSION" > .nvmrc
+
+# Skip install, we want to test the error message
+nvm-exec
