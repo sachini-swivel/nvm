@@ -16,3 +16,4 @@ No NODE_VERSION provided; no .nvmrc file found";
 
 # Skip install, we want to test the error message
 diff <(echo "${EXPECTED}") <(echo "${OUTPUT}")
+rm .nvmrc
