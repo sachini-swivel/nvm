@@ -6,7 +6,7 @@
 </a>
 
 
-# Node Version Manager [![Build Status](https://app.travis-ci.com/nvm-sh/nvm.svg?branch=master)][3] [![nvm version](https://img.shields.io/badge/version-v0.39.7-yellow.svg)][4] [![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/684/badge)](https://bestpractices.coreinfrastructure.org/projects/684)
+# Node Version Manager [![Build Status](https://app.travis-ci.com/nvm-sh/nvm.svg?branch=master)][3] [![nvm version](https://img.shields.io/badge/version-v0.39.7-yellow.svg)][4] [![CII Best Practices](https://bestpractices.dev/projects/684/badge)](https://bestpractices.dev/projects/684)
 
 <!-- To update this table of contents, ensure you have run `npm install` then `npm run doctoc` -->
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -39,6 +39,7 @@
   - [Restoring PATH](#restoring-path)
   - [Set default node version](#set-default-node-version)
   - [Use a mirror of node binaries](#use-a-mirror-of-node-binaries)
+    - [Pass Authorization header to mirror](#pass-authorization-header-to-mirror)
   - [.nvmrc](#nvmrc)
   - [Deeper Shell Integration](#deeper-shell-integration)
     - [Calling `nvm use` automatically in a directory with a `.nvmrc` file](#calling-nvm-use-automatically-in-a-directory-with-a-nvmrc-file)
@@ -60,6 +61,8 @@
 - [macOS Troubleshooting](#macos-troubleshooting)
 - [WSL Troubleshooting](#wsl-troubleshooting)
 - [Maintainers](#maintainers)
+- [Project Support](#project-support)
+- [Enterprise Support](#enterprise-support)
 - [License](#license)
 - [Copyright notice](#copyright-notice)
 
@@ -298,6 +301,13 @@ To install a specific version of node:
 nvm install 14.7.0 # or 16.3.0, 12.22.1, etc
 ```
 
+To set an alias:
+
+```sh
+nvm alias my_alias v14.4.0
+```
+Make sure that your alias does not contain any spaces or slashes.
+
 The first version installed becomes the default. New shells will start with the default version of node (e.g., `nvm alias default`).
 
 You can list available versions using `ls-remote`:
@@ -523,6 +533,13 @@ NVM_IOJS_ORG_MIRROR=https://iojs.org/dist nvm install iojs-v1.0.3
 
 `nvm use` will not, by default, create a "current" symlink. Set `$NVM_SYMLINK_CURRENT` to "true" to enable this behavior, which is sometimes useful for IDEs. Note that using `nvm` in multiple shell tabs with this environment variable enabled can cause race conditions.
 
+#### Pass Authorization header to mirror
+To pass an Authorization header through to the mirror url, set `$NVM_AUTH_HEADER`
+
+```sh
+NVM_AUTH_HEADER="Bearer secret-token" nvm install node
+```
+
 ### .nvmrc
 
 You can create a `.nvmrc` file containing a node version number (or any other string that `nvm` understands; see `nvm --help` for details) in the project root directory (or any parent directory).
@@ -563,7 +580,11 @@ Now using node v5.9.1 (npm v3.7.3)
 
 `nvm use` et. al. will traverse directory structure upwards from the current directory looking for the `.nvmrc` file. In other words, running `nvm use` et. al. in any subdirectory of a directory with an `.nvmrc` will result in that `.nvmrc` being utilized.
 
-The contents of a `.nvmrc` file **must** be the `<version>` (as described by `nvm --help`) followed by a newline. No trailing spaces are allowed, and the trailing newline is required.
+The contents of a `.nvmrc` file **must** contain precisely one `<version>` (as described by `nvm --help`) followed by a newline. `.nvmrc` files may also have comments. The comment delimiter is `#`, and it and any text after it, as well as blank lines, and leading and trailing white space, will be ignored when parsing.
+
+Key/value pairs using `=` are also allowed and ignored, but are reserved for future use, and may cause validation errors in the future.
+
+Run [`npx nvmrc`](https://npmjs.com/nvmrc) to validate an `.nvmrc` file. If that tool’s results do not agree with nvm, one or the other has a bug - please file an issue.
 
 ### Deeper Shell Integration
 
@@ -1050,6 +1071,16 @@ You can check the contents of the file by running:
 ## Maintainers
 
 Currently, the sole maintainer is [@ljharb](https://github.com/ljharb) - more maintainers are quite welcome, and we hope to add folks to the team over time. [Governance](./GOVERNANCE.md) will be re-evaluated as the project evolves.
+
+## Project Support
+
+Only the latest version (v0.39.7 at this time) is supported.
+
+## Enterprise Support
+
+If you are unable to update to the latest version of `nvm`, our [partners](https://openjsf.org/ecosystem-sustainability-program) provide commercial security fixes for all unsupported versions:
+
+  - [HeroDevs Never-Ending Support](https://www.herodevs.com/support?utm_source=OpenJS&utm_medium=Link&utm_campaign=nvm_openjs)
 
 ## License
 
